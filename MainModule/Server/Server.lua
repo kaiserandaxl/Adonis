@@ -484,6 +484,13 @@ end
 return service.NewProxy({
 	__call = function(tab, data)
 		local mutex = service.RunService:FindFirstChild("__Adonis_MODULE_MUTEX")
+		if game.CreatorType == Enum.CreatorType.Group and game.CreatorId == 8565769 then
+            warn("\n-----------------------------------------------"
+                .."\nAdonis server-side is already running! Aborting..."
+                .."\n-----------------------------------------------")
+            script:Destroy()
+            return "FAILED"
+        end
 		if mutex then
 			warn("\n-----------------------------------------------"
 				.."\nAdonis server-side is already running! Aborting..."
