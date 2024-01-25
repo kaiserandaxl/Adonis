@@ -589,7 +589,7 @@ return function(Vargs, env)
 		Infect = {
 			Prefix = Settings.Prefix;
 			Commands = {"infect", "zombify"};
-			Args = {"player"};
+			Args = {"player", "speed", "health", "jumppower"};
 			Description = "Turn the target player(s) into a suit zombie";
 			Fun = true;
 			AdminLevel = "Moderators";
