@@ -168,7 +168,12 @@ return function(Vargs, GetEnv)
 
 					if not Core.Key then
 						log("~! Getting key from server")
-						Core.Key = Remote.Get(`{client.DepsName}GET_KEY`)
+						local repcount = 1
+						repeat
+							log(`~! Get Key Try: {tostring(repcount)}`)
+							Core.Key = Remote.Get(`{client.DepsName}GET_KEY`) or nil
+							repcount += 1
+						until Core.Key or repcount > 10
 						if Core.Key then
 							client.Finish_Loading()
 						else
