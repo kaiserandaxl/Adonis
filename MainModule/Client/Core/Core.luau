@@ -125,10 +125,17 @@ return function(Vargs, GetEnv)
 					eventData.Events = events;
 
 					events.ProcessRemote = event.OnClientEvent:Connect(Process.Remote)
-					events.ParentChildRemoved = remoteParent.ChildRemoved:Connect(function(child)
-						if (Core.RemoteEvent == eventData) and child == event and task.wait() then
-							warn("::ADONIS:: REMOTE EVENT REMOVED? RE-GRABBING");
+					events.Destroying = event.Destroying:Connect(function()
+						warn("::ADONIS:: REMOTE EVENT REMOVED? RE-GRABBING");
+						log("~! REMOTEEVENT WAS REMOVED?")
+						Core.GetEvent();
+					end)
+					events.AncestryChanged = event.AncestryChanged:Connect(function()
+						if event.Parent ~= remoteParent then
+							warn("::ADONIS:: REMOTE EVENT REMOVED?");
 							log("~! REMOTEEVENT WAS REMOVED?")
+							events.Destroying:Disconnect()
+							events.AncestryChanged:Disconnect()
 							Core.GetEvent();
 						end
 					end)
