@@ -437,6 +437,11 @@ return function(Vargs, GetEnv)
 				msg = string.sub(msg, 1, Process.MsgStringLimit)
 			end
 
+			local prefix = msg:sub(1,1)
+			if prefix ~= Settings.PlayerPrefix and not (prefix == Settings.Prefix or (type(Settings.Prefix) == "table" and table.find(Settings.Prefix, prefix))) and not opts.Chat then
+				msg = `{type(Settings.Prefix) == "table" and Settings.Prefix[1] or Settings.Prefix}{msg}` -- Autofill Prefix if not there and not a chat message
+			end
+
 			msg = Functions.Trim(msg)
 
 			if string.match(msg, Settings.BatchKey) then
